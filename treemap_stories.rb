@@ -1,5 +1,6 @@
 require 'csv'
-require 'json'
+require 'rubygems'
+require 'treemap'
 
 class Story
   attr_reader :category, :status, :estimate
@@ -12,13 +13,6 @@ class Story
     "[#@status] #@category - #@name"
   end
 
-end
-
-def json_for(name)
-  {
-    "name" => name,
-    "children" => []
-  }
 end
 
 all_stories = CSV.readlines('release.csv').map do |row|
@@ -35,26 +29,22 @@ all_stories = CSV.readlines('release.csv').map do |row|
   Story.new(row[0], row[1], estimate, status)
 end
 
-d3_json = {
-  "name" => "release",
-  "children" => []
-}
+root = Treemap::Node.new
 
 all_stories.group_by(&:status).each do |status, status_stories|
-  status_json = json_for(status)
-
   status_stories.group_by(&:category).each do |category, stories|
 
     stories.each do |story|
-      story_json = { "name" => story.description, "size" => story.estimate }
-
-      status_json["children"] << story_json
+      root.new_child(:size => story.estimate)
     end
   end
-
-  d3_json["children"] << status_json
 end
 
-File.open("release_d3.json","w") do |f|
-  f.write(d3_json.to_json)
+
+output = Treemap::HtmlOutput.new do |o|
+  o.width = 800
+  o.height = 600
+  o.center_labels_at_depth = 1
 end
+
+puts output.to_html(root)
