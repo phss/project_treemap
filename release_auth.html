@@ -33,19 +33,21 @@ var margin = {top: 40, right: 10, bottom: 10, left: 10},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var ordering = {
-  "done": 5,
-  "in Test": 4,
-  "in Progress": 3,
-  "not started": 2
+var byStatus = function(a, b) {
+  var ordering = {
+    "done": 5,
+    "in Test": 4,
+    "in Progress": 3,
+    "not started": 2,
+    "not estimated": 1
+  }
+  return ordering[b.name] - ordering[a.name];
 }
 
 var treemap = d3.layout.treemap()
     .size([width, height])
-    .mode("slice-dice")
-    .sort(function(a, b) {
-      return ordering[b.name] - ordering[a.name];
-    })
+//    .mode("slice-dice")
+    .sort(byStatus)
     .value(function(d) { return d.size; });
 
 var div = d3.select("body").append("div")
@@ -69,10 +71,10 @@ d3.json("release_d3.json", function(error, root) {
 });
 
 function nodeColor(d) {
-  var blue_colors = { "done": "#BDEFEF", "in Test": "#8CE3E3", "in Progress": "#52D5D5", "not started": "#30C5C5" },
-      orange_colors = { "done": "#FFE9D6", "in Test": "#FFC799", "in Progress": "#FFA962", "not started": "#FF841F" },
-      green_colors = { "done": "#CAF6D8", "in Test": "#96EEB0", "in Progress": "#57E482", "not started": "#2CDD61" },
-      colors = green_colors;
+  var blue_colors = { "done": "#BDEFEF", "in Test": "#8CE3E3", "in Progress": "#52D5D5", "not started": "#30C5C5", "not estimated": "#249494" },
+      orange_colors = { "done": "#FFE9D6", "in Test": "#FFC799", "in Progress": "#FFA962", "not started": "#FF841F", "not estimated": "#E06500" },
+      green_colors = { "done": "#CAF6D8", "in Test": "#96EEB0", "in Progress": "#57E482", "not started": "#2CDD61", "not estimated": "#1DAF49" },
+      colors = orange_colors;
 
   return d.children ? colors[d.name] : null;
 }
