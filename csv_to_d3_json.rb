@@ -9,7 +9,11 @@ class Story
   end
 
   def description
-    "[#@status] #@category - #@name"
+    "[#@status] #@category - #@name (size #@estimate)"
+  end
+  
+  def size_for_map
+    estimate + 1
   end
 
 end
@@ -29,7 +33,7 @@ all_stories = CSV.readlines('release.csv').drop(1).map do |row|
   if row[2].nil?
     estimate = 0
   else
-    estimate = row[2].to_i + 1 # accounting for story of size 0
+    estimate = row[2].to_i
   end
 
   Story.new(row[0], row[1], estimate, status)
@@ -46,7 +50,7 @@ all_stories.group_by(&:status).each do |status, status_stories|
   status_stories.group_by(&:category).each do |category, stories|
 
     stories.each do |story|
-      story_json = { "name" => story.description, "size" => story.estimate }
+      story_json = { "name" => story.description, "size" => story.size_for_map }
 
       status_json["children"] << story_json
     end
