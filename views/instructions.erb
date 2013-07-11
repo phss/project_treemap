@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <h1>Available Maps</h1>
+
+    <ul>
+      <% @available_files.each do |file| %>
+        <li><a href="/map/<%= file %>"><%= file %></a> (last modifed <%= File.mtime(file + ".csv") %>)</li>
+      <% end %>
+    </ul>
+  </body>
+</html>

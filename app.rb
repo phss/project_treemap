@@ -13,6 +13,8 @@ COLORS = {
 # Webapp
 
 get '/' do
+  @available_files = Dir.glob("*.csv").map { |f| f.chomp(File.extname(f)) }
+
   erb :instructions
 end
 
