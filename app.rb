@@ -34,17 +34,17 @@ get '/:phase.json' do
   csv_file = "#@phase.csv"
 
   all_stories = CSV.readlines(csv_file).drop(1).map do |row|
-    status = row[3]
+    status = row[4]
     status = "Not Started" if status.nil?
   
-    estimate = row[2]
-    if row[2].nil?
+    estimate = row[3]
+    if row[3].nil?
       estimate = 0
     else
-      estimate = row[2].to_i
+      estimate = row[3].to_i
     end
   
-    Story.new(row[0], row[1], estimate, status)
+    Story.new(row[0], row[2], estimate, status)
   end
 
   root = tree_node_for(@phase)
