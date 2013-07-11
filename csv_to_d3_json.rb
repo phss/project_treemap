@@ -27,7 +27,7 @@ end
 
 all_stories = CSV.readlines('release.csv').drop(1).map do |row|
   status = row[3]
-  status = "not started" if status.nil?
+  status = "Not Started" if status.nil?
 
   estimate = row[2]
   if row[2].nil?
