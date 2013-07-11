@@ -50,7 +50,7 @@ var byStatus = function(a, b) {
 
 var treemap = d3.layout.treemap()
     .size([width, height])
-//    .mode("slice-dice")
+    .mode("<%= @map_mode %>")
     .sort(byStatus)
     .value(function(d) { return d.size; });
 
