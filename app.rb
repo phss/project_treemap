@@ -4,8 +4,16 @@ require 'json'
 
 # Webapp
 
+COLORS = {
+  "green" => "'#CAF6D8', '#96EEB0', '#57E482', '#2CDD61', '#1DAF49'",
+  "blue" => "'#BDEFEF', '#8CE3E3', '#52D5D5', '#30C5C5', '#249494'",
+  "orange" => "'#FFE9D6', '#FFC799', '#FFA962', '#FF841F', '#E06500'"
+}
+
 get '/map/:phase' do
   @phase = params[:phase]
+  color = params.key?("color") ? params["color"] : "green"
+  @color_scheme = COLORS[color]
 
   erb :map
 end

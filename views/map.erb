@@ -75,10 +75,7 @@ d3.json("/<%= @phase %>.json", function(error, root) {
 });
 
 function nodeColor(d) {
-  var blue_colors = statusValues("#BDEFEF", "#8CE3E3", "#52D5D5", "#30C5C5", "#249494") ,
-      orange_colors = statusValues("#FFE9D6", "#FFC799", "#FFA962", "#FF841F", "#E06500"),
-      green_colors = statusValues("#CAF6D8", "#96EEB0", "#57E482", "#2CDD61", "#1DAF49"),
-      colors = orange_colors;
+  var colors = statusValues(<%= @color_scheme %>);
 
   return d.children ? colors[d.name] : null;
 }
