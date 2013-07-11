@@ -71,12 +71,10 @@ d3.json("release_d3.json", function(error, root) {
 });
 
 function nodeColor(d) {
-  colors = {
-    "done": "#BDEFEF",
-    "in Test": "#8CE3E3",
-    "in Progress": "#52D5D5",
-    "not started": "#30C5C5"
-  }
+  var blue_colors = { "done": "#BDEFEF", "in Test": "#8CE3E3", "in Progress": "#52D5D5", "not started": "#30C5C5" },
+      orange_colors = { "done": "#FFE9D6", "in Test": "#FFC799", "in Progress": "#FFA962", "not started": "#FF841F" },
+      green_colors = { "done": "#CAF6D8", "in Test": "#96EEB0", "in Progress": "#57E482", "not started": "#2CDD61" },
+      colors = green_colors;
 
   return d.children ? colors[d.name] : null;
 }

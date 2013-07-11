@@ -21,7 +21,7 @@ def json_for(name)
   }
 end
 
-all_stories = CSV.readlines('release.csv').map do |row|
+all_stories = CSV.readlines('release.csv').drop(1).map do |row|
   status = row[3]
   status = "not started" if status.nil?
 
