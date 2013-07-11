@@ -39,10 +39,7 @@ all_stories = CSV.readlines('release.csv').drop(1).map do |row|
   Story.new(row[0], row[1], estimate, status)
 end
 
-d3_json = {
-  "name" => "release",
-  "children" => []
-}
+d3_json = json_for("release")
 
 all_stories.group_by(&:status).each do |status, status_stories|
   status_json = json_for(status)
