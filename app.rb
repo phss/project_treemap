@@ -12,8 +12,9 @@ end
 
 get '/:phase.json' do
   @phase = params[:phase]
+  csv_file = "#@phase.csv"
 
-  all_stories = CSV.readlines("#@phase.csv").drop(1).map do |row|
+  all_stories = CSV.readlines(csv_file).drop(1).map do |row|
     status = row[3]
     status = "Not Started" if status.nil?
   
@@ -27,10 +28,10 @@ get '/:phase.json' do
     Story.new(row[0], row[1], estimate, status)
   end
 
-  d3_json = json_for("release")
+  root = tree_node_for(@phase)
   
   all_stories.group_by(&:status).each do |status, status_stories|
-    status_json = json_for(status)
+    status_json = tree_node_for(status)
   
     status_stories.group_by(&:category).each do |category, stories|
   
@@ -41,11 +42,11 @@ get '/:phase.json' do
       end
     end
   
-    d3_json["children"] << status_json
+    root["children"] << status_json
   end
 
   content_type :json
-  d3_json.to_json
+  root.to_json
 end
 
 # "Model"
@@ -70,7 +71,7 @@ end
 
 # Utils
 
-def json_for(name)
+def tree_node_for(name)
   {
     "name" => name,
     "children" => []
