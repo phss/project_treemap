@@ -1,0 +1,8 @@
+Area,Story,Short Title,Estimate,Status,Risk?
+Project name,Full story title with lots of text,Small Title,3,Done,
+Project name,Small estimate,Small,0,Done,
+Another project,Story in test,Testing,2,In Test,
+Another project,Story in progress,Progressing,1,In Progress,
+Another project,Story not started. Status is blank.,Not started,5,,
+Yet another,Story not estimated. Estimate is blank.,Not estimated,,,
+Yet another,Risky story,Risky,2,In Progress,Yes
