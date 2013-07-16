@@ -79,7 +79,7 @@ class Story
   end
 
   def description
-    "[#@status] #@category - #@name (estimate #@estimate)"
+    "[#@status] #@category - #@name"
   end
   
   def size_for_map
