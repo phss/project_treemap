@@ -35,11 +35,11 @@ var margin = {top: 40, right: 10, bottom: 10, left: 10},
 
 var statusValues = function(doneValue, inTestValue, inProgressValue, notStartedValue, notEstimatedValue) {
   return {
-    "Done": doneValue,
-    "In Test": inTestValue,
-    "In Progress": inProgressValue,
-    "Not Started": notStartedValue,
-    "Not Estimated": notEstimatedValue 
+    "done": doneValue,
+    "in test": inTestValue,
+    "in progress": inProgressValue,
+    "not started": notStartedValue,
+    "not estimated": notEstimatedValue
   }
 }
 
@@ -80,7 +80,8 @@ function nodeColor(d) {
     }
   var colors = statusValues(<%= @color_scheme %>);
 
-  return d.children ? colors[d.name] : null;
-}
+var result = d.children ? colors[d.name.toLowerCase()] : null;
+      return result;
+    }
 
 </script>
