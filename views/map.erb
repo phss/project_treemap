@@ -75,6 +75,9 @@ d3.json("/<%= @phase %>.json", function(error, root) {
 });
 
 function nodeColor(d) {
+  if(d.risk === "Yes"){
+         return "Red"
+    }
   var colors = statusValues(<%= @color_scheme %>);
 
   return d.children ? colors[d.name] : null;

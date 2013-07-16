@@ -36,7 +36,7 @@ get '/:phase.json' do
   all_stories = CSV.readlines(csv_file).drop(1).map do |row|
     status = row[4]
     status = "Not Started" if status.nil?
-  
+    risk = row[5]
     estimate = row[3]
     if row[3].nil?
       estimate = 0
@@ -44,7 +44,7 @@ get '/:phase.json' do
       estimate = row[3].to_i
     end
   
-    Story.new(row[0], row[2], estimate, status)
+    Story.new(row[0], row[2], estimate, status, risk)
   end
 
   root = tree_node_for(@phase)
@@ -55,7 +55,7 @@ get '/:phase.json' do
     status_stories.group_by(&:category).each do |category, stories|
   
       stories.each do |story|
-        story_json = { "name" => story.description, "size" => story.size_for_map }
+        story_json = { "name" => story.description, "size" => story.size_for_map, "risk" => story.risk }
   
         status_json["children"] << story_json
       end
@@ -73,8 +73,8 @@ end
 class Story
   attr_reader :category, :status, :estimate
 
-  def initialize(category, name, estimate, status)
-    @category, @name, @estimate, @status = category, name, estimate, status 
+  def initialize(category, name, estimate, status, risk)
+    @category, @name, @estimate, @status, @risk = category, name, estimate, status, risk
   end
 
   def description
@@ -84,6 +84,8 @@ class Story
   def size_for_map
     estimate + 1
   end
+  attr_reader :risk
+
 
 end
 
