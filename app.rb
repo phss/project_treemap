@@ -83,7 +83,7 @@ class Story
   end
   
   def size_for_map
-    estimate + 1
+    4 * (estimate + 1)
   end
   attr_reader :risk
 
