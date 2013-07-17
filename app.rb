@@ -72,7 +72,7 @@ end
 # "Model"
 
 class Story
-  attr_reader :category, :status, :estimate
+  attr_reader :category, :status, :estimate, :risk, :name
 
   def initialize(category, name, estimate, status, risk)
     @category, @name, @estimate, @status, @risk = category, name, estimate, status, risk
@@ -85,7 +85,6 @@ class Story
   def size_for_map
     4 * (estimate + 1)
   end
-  attr_reader :risk
 
 
 end
