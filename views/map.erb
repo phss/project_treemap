@@ -75,6 +75,9 @@ d3.json("/<%= @phase %>.json", function(error, root) {
 });
 
 function nodeColor(d) {
+    if(d.size === 4){//4 == (0 + 1) * 4 -> stories without estimates
+      return "Orange"
+  }
   if(d.risk === "Yes"){
          return "Red"
     }
