@@ -54,7 +54,7 @@ get '/:phase.json' do
     status_json = tree_node_for(status)
   
     status_stories.group_by(&:category).each do |category, stories|
-  
+      stories.sort!{ |x, y| x.size_for_map <=> y.size_for_map }
       stories.each do |story|
         story_json = { "name" => story.description, "size" => story.size_for_map, "risk" => story.risk }
   
