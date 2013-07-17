@@ -22,6 +22,7 @@ get '/map/:phase' do
   @phase = params[:phase]
   @color_scheme = COLORS[params.fetch("color", "green")]
   @map_mode = params.fetch("map_mode", "squarify")
+  @captions = params.fetch("captions", "true")
 
   erb :map
 end

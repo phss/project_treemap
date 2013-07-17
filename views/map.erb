@@ -71,7 +71,7 @@ d3.json("/<%= @phase %>.json", function(error, root) {
       .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
       .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; })
       .style("background", nodeColor)
-      .text(function(d) { return d.children ? null : d.name; });
+      .text(function(d) { return d.children || false === <%= @captions %> ? null : d.name; });
 });
 
 function nodeColor(d) {
