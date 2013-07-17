@@ -50,7 +50,7 @@ get '/:phase.json' do
 
   root = tree_node_for(@phase)
   
-  all_stories.group_by(&:status).each do |status, status_stories|
+  all_stories.delete_if {|x| x.name.nil? }.group_by(&:status).each do |status, status_stories|
     status_json = tree_node_for(status)
   
     status_stories.group_by(&:category).each do |category, stories|
