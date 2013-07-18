@@ -1,6 +1,9 @@
+require 'rubygems'
 require 'sinatra'
 require 'csv'
 require 'json'
+require 'iconv'
+require 'roo'
 
 use Rack::Auth::Basic do |username, password|
       username == ENV['MY_SITE_USERNAME'] && password == ENV['MY_SITE_SECRET']
@@ -16,7 +19,7 @@ COLORS = {
 # Webapp
 
 get '/' do
-  @available_files = Dir.glob("*.csv").map { |f| f.chomp(File.extname(f)) }
+  @available_files = Dir.glob("files/*.csv").map { |f| f.chomp(File.extname(f)) }
 
   erb :instructions
 end
@@ -31,6 +34,25 @@ get '/map/:phase' do
   @captions = params.fetch("captions", "true")
 
   erb :map
+end
+
+get '/upload' do
+    erb :upload
+end
+
+post '/upload' do
+    tempfile = params[:file][:tempfile] 
+    filename = params[:file][:filename] 
+    FileUtils.cp(tempfile.path, filename)
+    xls = Roo::Excelx.new(filename)
+    if xls.sheets.size > 1
+        xls.sheets.each{ |sheet|
+            xls.to_csv("files/#{sheet}.csv", "#{sheet}")
+        }
+    else
+        xls.to_csv("files/#{filename}.csv")
+    end
+    FileUtils.rm(filename)
 end
 
 get '/:phase.json' do
