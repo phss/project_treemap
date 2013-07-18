@@ -21,6 +21,9 @@ get '/' do
   erb :instructions
 end
 
+get '/test' do
+    erb :test
+end
 get '/map/:phase' do
   @phase = params[:phase]
   @color_scheme = COLORS[params.fetch("color", "green")]
