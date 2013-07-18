@@ -19,7 +19,7 @@ COLORS = {
 # Webapp
 
 get '/' do
-  @available_files = Dir.glob("files/*.csv").map { |f| f.chomp(File.extname(f)) }
+  @available_files = Dir.glob("files/*.csv").map { |f| File.basename(f, ".*") }
 
   erb :instructions
 end
@@ -60,7 +60,7 @@ get '/:phase.json' do
   # into a D3 treemap compatible json object.
 
   @phase = params[:phase]
-  csv_file = "#@phase.csv"
+  csv_file = "files/#@phase.csv"
 
   all_stories = CSV.readlines(csv_file).drop(1).map do |row|
 

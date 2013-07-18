@@ -4,7 +4,7 @@
 
     <ul>
       <% @available_files.each do |file| %>
-        <li><a href="/map/<%= file %>"><%= file %></a> (last modifed <%= File.mtime(file + ".csv") %>)</li>
+        <li><a href="/map/<%= file %>"><%= file %></a> (last modifed <%= File.mtime("files/"+file + ".csv") %>)</li>
       <% end %>
     </ul>
   </body>
