@@ -2,6 +2,9 @@ require 'sinatra'
 require 'csv'
 require 'json'
 
+use Rack::Auth::Basic do |username, password|
+      username == ENV['MY_SITE_USERNAME'] && password == ENV['MY_SITE_SECRET']
+end
 
 # From lighter (Done) to darker (Not Estimated)
 COLORS = {
