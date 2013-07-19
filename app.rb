@@ -43,8 +43,9 @@ end
 post '/upload' do
     tempfile = params[:file][:tempfile] 
     filename = params[:file][:filename] 
-    FileUtils.cp(tempfile.path, filename)
-    xls = Roo::Excelx.new(filename)
+    FileUtils.cp(tempfile.path, "tmp/#{filename}")
+    puts Dir.entries("tmp")
+    xls = Roo::Excelx.new("tmp/#{filename}")
     if xls.sheets.size > 1
         xls.sheets.each{ |sheet|
             xls.to_csv("files/#{sheet}.csv", "#{sheet}")
@@ -52,6 +53,7 @@ post '/upload' do
     else
         xls.to_csv("files/#{filename}.csv")
     end
+    puts Dir.entries("files")
     FileUtils.rm(filename)
 end
 
